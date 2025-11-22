@@ -1,0 +1,337 @@
+/* ======================================================
+   GLOBAL DESIGN — SOFT COLORS + GLASSMORPHISM + DARK MODE
+====================================================== */
+:root {
+    --bg: #eef3ff;
+    --card: rgba(255, 255, 255, 0.65);
+    --text: #2c3e50;
+    --primary: #6c8ced;
+    --primary-hover: #4f6de0;
+    --shadow: rgba(0, 0, 0, 0.18);
+}
+
+/* Dark mode variables */
+.dark {
+    --bg: #1e1f25;
+    --card: rgba(40, 42, 55, 0.65);
+    --text: #f1f1f1;
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: var(--bg);
+    transition: background 0.4s ease;
+    color: var(--text);
+    padding: 20px;
+}
+
+/* ======================================================
+   TITLES
+====================================================== */
+h1,
+h2 {
+    text-align: center;
+    color: var(--text);
+}
+
+/* ======================================================
+   GLASS TABLE DESIGN WITH TRANSITIONS
+====================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    backdrop-filter: blur(12px);
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px var(--shadow);
+    transition: background 0.4s ease;
+}
+
+th {
+    background: rgba(230, 235, 255, 0.5);
+    padding: 12px;
+    font-weight: 600;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(200, 200, 200, 0.2);
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* Hover row highlight */
+tr:hover {
+    background: rgba(150, 170, 255, 0.15);
+}
+
+/* ✓ style */
+td.present,
+td.participated {
+    font-weight: 700;
+    color: #27ae60;
+    transition: transform 0.2s ease;
+}
+
+td.present:hover,
+td.participated:hover {
+    transform: scale(1.25);
+}
+
+/* ======================================================
+   COLOR INTERACTIONS (EXERCISE COLORS)
+====================================================== */
+.green-row {
+    background-color: #d9fdd3 !important;
+}
+
+.yellow-row {
+    background-color: #fff7d6 !important;
+}
+
+.red-row {
+    background-color: #ffd6d6 !important;
+}
+
+/* Dark mode version of interaction colors */
+.dark .green-row {
+    background-color: #275d2c !important;
+}
+
+.dark .yellow-row {
+    background-color: #6a5f27 !important;
+}
+
+.dark .red-row {
+    background-color: #6b2626 !important;
+}
+
+/* ======================================================
+   BUTTONS WITH ICONS
+====================================================== */
+button {
+    background: var(--primary);
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    margin: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 3px 10px var(--shadow);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-3px);
+}
+
+/* Specific color buttons */
+#resetBtn {
+    background: #ff6b6b;
+}
+
+#resetBtn:hover {
+    background: #ff4a4a;
+}
+
+#excellentBtn {
+    background: #7bd96d;
+}
+
+#excellentBtn:hover {
+    background: #64c658;
+}
+
+#reportBtn {
+    background: #55c3c5;
+}
+
+#reportBtn:hover {
+    background: #3cb3b6;
+}
+
+#darkModeBtn {
+    background: #333;
+}
+
+#darkModeBtn:hover {
+    background: #000;
+}
+
+/* Icon style */
+button i {
+    font-size: 18px;
+}
+
+/* ======================================================
+   FORM + GLASSMORPHISM
+====================================================== */
+form {
+    width: 60%;
+    margin: 20px auto;
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px var(--shadow);
+    transition: background 0.4s ease;
+}
+
+label {
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccd4e0;
+    background: rgba(255, 255, 255, 0.6);
+    transition: border 0.2s ease, background 0.3s ease;
+}
+
+input:focus {
+    border-color: var(--primary);
+    background: white;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 13px;
+}
+
+.success-msg {
+    color: #27ae60;
+}
+
+/* ======================================================
+   ROUNDED AVATARS FOR STUDENTS
+====================================================== */
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.12);
+}
+
+/* ======================================================
+   REPORT SECTION + CHART
+====================================================== */
+#reportSection {
+    width: 70%;
+    margin: 30px auto;
+    padding: 20px;
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px var(--shadow);
+    backdrop-filter: blur(12px);
+    transition: background 0.4s ease;
+}
+
+canvas {
+    margin-top: 20px;
+}
+/* =======================
+   COLOR PICKER PANEL
+======================= */
+#colorPanel {
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    box-shadow: 0 4px 20px var(--shadow);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+#colorPanel.hidden {
+    display: none;
+}
+
+#colorPanel input[type="color"] {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 15px;
+    border: none;
+    cursor: pointer;
+}
+
+#colorPanel button {
+    width: 100%;
+    margin-top: 10px;
+}
+/* =======================
+   PRESET THEME BUTTONS
+======================= */
+#presetThemes {
+    margin: 25px auto;
+    width: 300px;
+    padding: 20px;
+    background: var(--card);
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 4px 20px var(--shadow);
+    backdrop-filter: blur(12px);
+}
+
+#presetThemes h3 {
+    margin-bottom: 15px;
+}
+
+#presetThemes .preset {
+    width: 100%;
+    margin: 6px 0;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    transition: 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+#presetThemes .preset:hover {
+    transform: translateY(-2px);
+}
+/* Search Input */
+#searchInput {
+    width: 40%;
+    padding: 12px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid #ccd4e0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    transition: 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: var(--primary);
+    background: white;
+}
+
+/* Sort Message */
+#sortMessage {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0.85;
+}
