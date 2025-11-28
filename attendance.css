@@ -335,3 +335,91 @@ canvas {
     color: var(--text);
     opacity: 0.85;
 }
+/* styles manquants ajoutés */
+.rowHover {
+    outline: 2px solid rgba(108, 140, 237, 0.12);
+    transition: background 0.18s ease;
+}
+
+.excellent {
+    box-shadow: 0 4px 20px rgba(108, 140, 237, 0.12);
+    transform: translateY(-2px);
+}
+
+#successMessage {
+    text-align: center;
+    font-weight: 600;
+    color: #27ae60;
+}
+
+/* harmonisation des sélecteurs de boutons (si tu gardes les IDs du HTML) */
+#highlightBtn {
+    background: #7bd96d;
+}
+
+#highlightBtn:hover {
+    background: #64c658;
+}
+
+#showReportBtn {
+    background: #55c3c5;
+}
+
+#showReportBtn:hover {
+    background: #3cb3b6;
+}
+
+/* classe abs/par counts (optionnel: style discret) */
+.abs-count {
+    font-weight: 700;
+    text-align: center;
+}
+
+.par-count {
+    font-weight: 700;
+    text-align: center;
+}
+/* styles manquants ajoutés */
+.rowHover {
+    outline: 2px solid rgba(108, 140, 237, 0.12);
+    transition: background 0.18s ease;
+}
+
+.excellent {
+    box-shadow: 0 4px 20px rgba(108, 140, 237, 0.12);
+    transform: translateY(-2px);
+}
+
+#successMessage {
+    text-align: center;
+    font-weight: 600;
+    color: #27ae60;
+}
+
+/* harmonisation des sélecteurs de boutons (si tu gardes les IDs du HTML) */
+#highlightBtn {
+    background: #7bd96d;
+}
+
+#highlightBtn:hover {
+    background: #64c658;
+}
+
+#showReportBtn {
+    background: #55c3c5;
+}
+
+#showReportBtn:hover {
+    background: #3cb3b6;
+}
+
+/* classe abs/par counts (optionnel: style discret) */
+.abs-count {
+    font-weight: 700;
+    text-align: center;
+}
+
+.par-count {
+    font-weight: 700;
+    text-align: center;
+}

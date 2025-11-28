@@ -1,0 +1,195 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Attendance System</title>
+
+    <link rel="stylesheet" href="attendance.css">
+
+
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="attendance.css">
+
+    <!-- jQuery + Chart.js -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JS (main) -->
+    <script defer src="attendance.js"></script>
+
+    <!-- Export to EXCEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- Export to PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+    <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
+    <a href="logout.php">Logout</a>>
+    <h1>Attendance Management (S1–S6 &amp; P1–P6)</h1>
+
+    <section id="controls">
+        <button id="showReportBtn">Show Report</button>
+        <button id="highlightBtn">Highlight Excellent Students</button>
+        <button id="resetBtn">Reset Colors</button>
+        <button id="clearStorageBtn">Clear Saved Data</button>
+    </section>
+
+    <section id="tableSection">
+        <table id="attendanceTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>S1</th>
+                    <th>S2</th>
+                    <th>S3</th>
+                    <th>S4</th>
+                    <th>S5</th>
+                    <th>S6</th>
+                    <th>P1</th>
+                    <th>P2</th>
+                    <th>P3</th>
+                    <th>P4</th>
+                    <th>P5</th>
+                    <th>P6</th>
+                    <th>Absences</th>
+                    <th>Participation</th>
+                    <th>Message</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example rows -->
+                <tr>
+                    <td>101</td>
+                    <td>Ahmed</td>
+                    <td>Sara</td>
+                    <td class="clickable"></td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable"></td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable"></td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable"></td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable"></td>
+                    <td class="clickable"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="deleteBtn">X</button></td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td>Benkacem</td>
+                    <td>Yacine</td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable"></td>
+                    <td class="clickable"></td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable">✓</td>
+                    <td class="clickable"></td>
+                    <td class="clickable"></td>
+                    <td class="clickable"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="deleteBtn">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <hr>
+
+    <section id="formSection">
+        <h2>Add Student</h2>
+        <form id="addStudentForm" novalidate>
+            <label for="studentId">Student ID</label>
+            <input id="studentId" type="text" />
+            <div class="error" id="idError"></div>
+
+            <label for="lastName">Last Name</label>
+            <input id="lastName" type="text" />
+            <div class="error" id="lastError"></div>
+
+            <label for="firstName">First Name</label>
+            <input id="firstName" type="text" />
+            <div class="error" id="firstError"></div>
+
+            <label for="email">Email</label>
+            <input id="email" type="text" />
+            <div class="error" id="emailError"></div>
+
+            <button type="submit">Add Student</button>
+        </form>
+
+        <div id="successMessage" class="success" style="display:none;"></div>
+    </section>
+
+    <hr>
+
+    <section id="reportSection" style="display:none;">
+        <h2>Attendance Report</h2>
+        <p><strong>Total students:</strong> <span id="totalStudents">0</span></p>
+        <p><strong>Students present (≥1 S✓):</strong> <span id="presentStudents">0</span></p>
+        <p><strong>Students participated (≥1 P✓):</strong> <span id="participatingStudents">0</span></p>
+        <canvas id="reportChart" width="600" height="300"></canvas>
+    </section>
+
+    <button id="darkModeBtn"><i class="fas fa-moon"></i> Dark Mode</button>
+    <button id="colorPickerBtn"><i class="fas fa-palette"></i> Select Colors</button>
+
+    <div id="colorPanel" class="hidden">
+        <h3>Customize Theme Colors</h3>
+        <label>Primary Color:</label><input type="color" id="primaryColor">
+        <label>Background Color:</label><input type="color" id="bgColor">
+        <label>Card / Table Color:</label><input type="color" id="cardColor">
+        <button id="saveColors"><i class="fas fa-save"></i> Save Theme</button>
+    </div>
+
+    <div id="presetThemes">
+        <h3>Preset Themes</h3>
+        <button class="preset" data-primary="#6c8ced" data-bg="#eef3ff" data-card="rgba(255,255,255,0.65)">Soft
+            Blue</button>
+        <button class="preset" data-primary="#4CAF50" data-bg="#e8ffef" data-card="rgba(255,255,255,0.60)">Mint
+            Green</button>
+        <button class="preset" data-primary="#ff7b54" data-bg="#fff2e8" data-card="rgba(255,255,255,0.65)">Sunset
+            Orange</button>
+        <button class="preset" data-primary="#a980ff" data-bg="#f4ecff" data-card="rgba(255,255,255,0.65)">Lavender
+            Purple</button>
+        <button class="preset" data-primary="#ff5ca8" data-bg="#ffe4f2" data-card="rgba(255,255,255,0.65)">Pink
+            Rose</button>
+        <input type="text" id="searchInput" placeholder="Search by Name...">
+        <button id="sortAbsences"><i class="fas fa-sort-numeric-up"></i> Sort by Absences (ASC)</button>
+        <button id="sortParticipation"><i class="fas fa-sort-numeric-down"></i> Sort by Participation
+            (DESC)</button>
+        <div id="sortMessage"></div>
+    </div>
+
+    <button id="exportPDF">Export PDF</button>
+    <button id="exportExcel">Export Excel</button>
+    <a href="logout.php"><button>Logout</button></a>
+
+</body>
+
+</html>
